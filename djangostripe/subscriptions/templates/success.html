@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mile High Diaries</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Velvet Noir Palette -->
+  <style>
+    :root {
+      --velvet-wine: #5A0F2F;
+      --noir-black: #0E0E0F;
+      --champagne-gold: #D1B98E;
+      --rose-smoke: #CBA6A0;
+      --pearl-white: #F4F2EF;
+    }
+
+    body { background-color: var(--noir-black); color: var(--pearl-white); }
+
+    .bg-velvet { background-color: var(--velvet-wine) !important; }
+    .bg-noir { background-color: var(--noir-black) !important; }
+    .bg-rose { background-color: var(--rose-smoke) !important; }
+
+    .text-gold { color: var(--champagne-gold) !important; }
+    .text-pearl { color: var(--pearl-white) !important; }
+    .text-velvet { color: var(--velvet-wine) !important; }
+    .text-rose { color: var(--rose-smoke) !important; }
+
+    .btn-velvet {
+      background-color: var(--velvet-wine);
+      color: var(--pearl-white);
+      border: 2px solid var(--velvet-wine);
+      transition: all 0.3s ease;
+    }
+    .btn-velvet:hover {
+      background-color: var(--champagne-gold);
+      color: var(--noir-black);
+      border-color: var(--champagne-gold);
+    }
+
+    .btn-gold {
+      background-color: var(--champagne-gold);
+      color: var(--noir-black);
+      border: 2px solid var(--champagne-gold);
+      transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+      background-color: var(--velvet-wine);
+      color: var(--pearl-white);
+      border-color: var(--velvet-wine);
+    }
+
+    .card-rose {
+      background-color: var(--rose-smoke);
+      color: var(--pearl-white);
+    }
+
+    .card-velvet {
+      background-color: var(--velvet-wine);
+      color: var(--pearl-white);
+    }
+  </style>
+</head>
+<body class="bg-noir text-pearl">
+
+  <div class="container mt-5">
+    <div class="card card-velvet shadow-sm p-4 text-center" style="max-width: 28rem; margin: auto;">
+      <h3 class="mb-3">Subscription Successful!</h3>
+      <p class="mb-3">You have successfully subscribed!</p>
+      <a href="{% url 'subscriptions-home' %}" class="btn btn-gold w-50 mx-auto d-block">Return to Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

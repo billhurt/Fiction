@@ -1,0 +1,17 @@
+{% block content %}
+<div class="container my-3">
+    <h1>Blog Posts</h1>
+    {% if latest_blog_posts %}
+    <ul class="list-group list-group-flush my-3">
+        {% for post in latest_blog_posts %}
+        <li class="list-group-item list-group-item-light py-3 text-bg-dark p-3"><a class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                href={% url 'blog:post_detail' post.slug %}>{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="container justify-content-center d-flex flex-column flex-sm-row">
+        <p class="p-5 text-center">No posts are available.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
