@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -60,7 +61,9 @@ ROOT_URLCONF = 'djangostripe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        "DIRS": [
+            BASE_DIR / "templates"
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +87,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+ACCOUNT_FORMS = {
+    "signup": "subscriptions.forms.CustomSignupForm"
+}
+
 
 
 # Password validation
@@ -111,7 +120,8 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = '/accounts'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

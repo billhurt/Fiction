@@ -1,0 +1,259 @@
+{% load i18n %}
+{% load account %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% trans "Account" %} — Mile High Diaries</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+:root {
+    --velvet: #5a0f2f;
+    --noir: #0e0e0f;
+    --gold: #d1b98e;
+    --rose: #cba6a0;
+    --pearl: #f4f2ef;
+    --card-bg: #1a0f17;
+}
+
+body {
+    background-color: var(--noir);
+    color: var(--pearl);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.home-btn {
+    display: inline-block;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background: var(--gold);
+    color: var(--noir);
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+.home-btn:hover {
+    background: var(--rose);
+    color: var(--pearl);
+}
+
+.auth-card {
+    background-color: var(--card-bg);
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.auth-card h1, .auth-card h2 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.auth-card p {
+    margin-bottom: 1rem;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--pearl);
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    border: 1px solid var(--gold);
+}
+
+.table th {
+    background-color: #1a0f17;
+    text-align: left;
+}
+
+input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+.label-info {
+    background-color: var(--gold);
+    color: var(--noir);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.label-warning {
+    background-color: #cba6a0;
+    color: var(--noir);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.label-success {
+    background-color: var(--rose);
+    color: var(--noir);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.btn-primary, .btn-success, .btn-danger {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    color: var(--noir);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color: var(--pearl);
+}
+
+.btn-success {
+    background: var(--gold);
+    color: var(--noir);
+}
+
+.btn-success:hover {
+    background: var(--rose);
+    color: var(--pearl);
+}
+
+.btn-danger {
+    background: #b71c1c;
+    color: var(--pearl);
+}
+
+.btn:hover.btn-danger {
+    background: #ff5252;
+}
+
+.form-control {
+    background-color: #1f0e1b;
+    color: var(--pearl);
+    border: 1px solid var(--gold);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 0.2rem rgba(203,166,160,0.25);
+    background-color: #1f0e1b;
+    color: var(--pearl);
+}
+
+/* Table header text color */
+.table th {
+    background-color: #1a0f17;
+    text-align: left;
+    color: var(--pearl); /* make TH text white/pearl */
+}
+
+/* Input placeholder color */
+.form-control::placeholder {
+    color: var(--pearl); /* make placeholder text white/pearl */
+    opacity: 1; /* ensures full opacity in most browsers */
+}
+
+</style>
+</head>
+<body>
+
+<!-- Home button at top -->
+<a href="{% url 'subscriptions-home' %}" class="home-btn">{% trans "Home" %}</a>
+<a href="{% url 'posts' %}" class="home-btn">{% trans "Stories" %}</a>
+
+<div class="auth-card">
+    <h1>{% trans "Account Emails" %}</h1>
+
+    {% if user.emailaddress_set.all %}
+    <p>{% trans 'The following e-mail addresses are associated to your account:' %}</p>
+
+    <form action="{% url 'account_email' %}" method="post">
+        {% csrf_token %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans 'E-mail' %}</th>
+                    <th>{% trans 'Status' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emailaddress in user.emailaddress_set.all %}
+                <tr>
+                    <td>
+                        <label for="email_radio_{{ forloop.counter }}">
+                            <input id="email_radio_{{ forloop.counter }}" type="radio" name="email" {% if emailaddress.primary %}checked{% endif %} value="{{ emailaddress.email }}">
+                            {{ emailaddress.email }}
+                        </label>
+                    </td>
+                    <td>
+                        {% if emailaddress.verified %}
+                            <span class="label-info">{% trans "Verified" %}</span>
+                        {% else %}
+                            <span class="label-warning">{% trans "Unverified" %}</span>
+                        {% endif %}
+                        {% if emailaddress.primary %}
+                            <span class="label-success">{% trans "Primary" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mb-3">
+            <button class="btn btn-success" type="submit" name="action_primary">{% trans 'Make Primary' %}</button>
+            <button class="btn btn-primary" type="submit" name="action_send">{% trans 'Re-send Verification' %}</button>
+            <button class="btn btn-danger" type="submit" name="action_remove">{% trans 'Remove' %}</button>
+        </div>
+    </form>
+
+    {% else %}
+    <p><strong>{% trans 'Warning:' %}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
+    {% endif %}
+
+    <h2>{% trans "Add E-mail Address" %}</h2>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="email" name="{{ add_email_form.email.name }}" class="form-control" placeholder="{% trans 'E-mail' %}" required>
+        <button class="btn btn-primary" type="submit" name="action_add">{% trans "Add E-mail" %}</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.querySelectorAll("button[name='action_remove']").forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        if(!confirm("{% trans 'Do you really want to remove the selected e-mail address?' %}")) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

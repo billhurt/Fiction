@@ -1,0 +1,133 @@
+{% load static %} 
+{% include "subscriptions/navbar.html" %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% block meta %}
+  <meta
+    name="description"
+    content="Mile High Diaries — premium erotic stories and intimate adventures."
+  />
+  <meta property="og:title" content="Mile High Diaries" />
+  <meta property="og:description" content="Premium erotic stories." />
+  <meta property="og:type" content="website" />
+  {% endblock %}
+  <title>Mile High Diaries</title>
+</head>
+
+<style>
+  /* Color palette */
+  :root {
+    --velvet-wine: #5a0f2f;
+    --noir-black: #0e0e0f;
+    --champagne-gold: #d1b98e;
+    --rose-smoke: #cba6a0;
+    --pearl-white: #f4f2ef;
+  }
+
+  body {
+    background-color: var(--noir-black);
+    color: var(--pearl-white);
+  }
+
+  .story-card {
+    background-color: #1a0f17;
+    color: #f4f2ef; /* Text color inside card */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+
+  .story-card:hover {
+    background-color: #5a0f2f; /* Slightly lighter hover color */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .story-card h5,
+  .story-card p {
+    color: #f4f2ef; /* Ensures text is readable */
+  }
+
+  .story-btn {
+    background-color: var(--champagne-gold);
+    color: var(--noir-black);
+    border: 2px solid var(--champagne-gold);
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+
+  .story-btn:hover {
+    background-color: var(--velvet-wine);
+    color: var(--pearl-white);
+    border-color: var(--velvet-wine);
+  }
+
+  .story-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .story-card-link:hover .story-card {
+    transform: translateY(-3px);
+    transition: 0.2s ease;
+  }
+
+  /* Navbar hover only changes text color */
+  .nav-hover:hover {
+    color: var(--champagne-gold) !important;
+  }
+
+  .no-posts {
+    color: var(--rose-smoke);
+  }
+</style>
+{% block content %}
+<div class="container py-5">
+  <!-- Page Title -->
+  <h1 class="fw-bold text-pearl mb-4 text-center">Stories</h1>
+
+  {% if latest_blog_posts %}
+  <div class="row g-4">
+    {% for post in latest_blog_posts %}
+    <div class="col-md-6 col-lg-4 d-flex">
+      <a href="{% url 'post_detail' post.slug %}" class="story-card-link">
+        <div class="story-card shadow-sm">
+          <h5>{{ post.title }}</h5>
+          <p>{{ post.excerpt|default:post.content|truncatewords:20 }}</p>
+          <div class="story-btn mt-auto w-100">Read Story</div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="d-flex justify-content-center align-items-center py-5">
+    <p class="fs-5 text-center no-posts">No posts are available.</p>
+  </div>
+  {% endif %}
+</div>
+
+<footer class="text-center mt-5 py-4">
+  &copy; <span id="year"></span> Mile High Diaries. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

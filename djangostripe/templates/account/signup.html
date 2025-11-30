@@ -1,0 +1,179 @@
+{% load i18n %}
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% trans "Sign Up" %} — Mile High Diaries</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+:root {
+    --velvet: #5a0f2f;
+    --noir: #0e0e0f;
+    --gold: #d1b98e;
+    --rose: #cba6a0;
+    --pearl: #f4f2ef;
+    --card-bg: #1a0f17;
+}
+
+body {
+    background-color: var(--noir);
+    color: var(--pearl);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    padding-top: 3rem;
+}
+
+
+.home-btn {
+    display: inline-block;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background: var(--gold);
+    color: var(--noir);
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+.home-btn:hover {
+    background: var(--rose);
+    color: var(--pearl);
+}
+
+.auth-card {
+    background-color: var(--card-bg);
+    padding: 3rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 480px;
+}
+
+.auth-card h1 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.auth-card p {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-card a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-card a:hover {
+    color: var(--rose);
+}
+
+.form-control {
+    background-color: #1f0e1b;
+    color: var(--pearl);
+    border: 1px solid var(--gold);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 0.2rem rgba(203,166,160,0.25);
+    background-color: #1f0e1b;
+    color: var(--pearl);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    color: var(--noir);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color: var(--pearl);
+    transform: scale(1.05);
+}
+
+.checkbox-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+</style>
+</head>
+<body>
+
+<!-- Home button at top -->
+<a href="{% url 'subscriptions-home' %}" class="home-btn">{% trans "Home" %}</a>
+
+<div class="auth-card">
+    <h1>{% trans "Sign Up" %}</h1>
+
+    <p>
+        {% trans "Already have an account?" %}
+        <a href="{% url 'account_login' %}">{% trans "Sign in" %}</a>.
+    </p>
+
+    <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+
+        {% for field in form %}
+            {% if field.name != "confirm_age" %}
+                <div>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color:red">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="checkbox-container">
+            <input type="checkbox" name="confirm_age" id="id_confirm_age" required>
+            <label for="id_confirm_age">{% trans "I confirm I am 18+ years old" %}</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{% trans "Sign Up" %}</button>
+    </form>
+
+    {% if PASSKEY_SIGNUP_ENABLED %}
+        <p class="text-center mt-3">
+            <a href="{{ signup_by_passkey_url }}">
+                {% trans "Sign up using a passkey" %}
+            </a>
+        </p>
+    {% endif %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

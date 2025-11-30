@@ -19,10 +19,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100, help_text="Enter a title for your blog post.")
     slug = models.SlugField(max_length=200, unique=True)
     sub_title = models.CharField(max_length=100, blank=True, help_text="Enter a sub-title for your blog post.")
-    content = models.TextField(max_length=2000, help_text="Enter the content of your blog post here.", unique=True)
+    content = models.TextField(max_length=100000, help_text="Enter the content of your blog post here.", unique=True)
     created_at = models.DateTimeField(auto_now_add=True, help_text="The time at which your post was created.")
     updated_at = models.DateTimeField(auto_now_add=True, help_text="The last time your blog post was updated.")
-    likes = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['updated_at']

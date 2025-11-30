@@ -1,0 +1,98 @@
+/* static/css/main.css */
+
+/* Modern Dark Palette */
+:root {
+  --velvet: #5a0f2f;
+  --noir: #0e0e0f;
+  --gold: #d1b98e;
+  --rose: #cba6a0;
+  --pearl: #f4f2ef;
+  --card-bg: #1a0f17;
+}
+
+body {
+  background-color: var(--noir);
+  color: var(--pearl);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Containers */
+.container, .story-container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 3rem 1rem;
+}
+
+/* Typography */
+.story-title {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--pearl);
+}
+
+.story-card {
+  background-color: var(--card-bg);
+  color: var(--pearl);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+.story-meta {
+  color: var(--rose);
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+/* Buttons */
+.btn-subscribe {
+  background: linear-gradient(135deg, var(--gold), var(--rose));
+  color: var(--noir);
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-subscribe:hover {
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  color: var(--pearl);
+  transform: scale(1.05);
+}
+
+.pagination-btn {
+  background: var(--velvet);
+  color: var(--gold);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+  background: var(--gold);
+  color: var(--noir);
+}
+
+.story-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

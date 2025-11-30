@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /checkout/
+Disallow: /settings/
+
+Allow: /
+
+Sitemap: https://milehigh-diaries.com/sitemap.xml
