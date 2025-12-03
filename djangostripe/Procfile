@@ -1,1 +1,1 @@
-web: gunicorn djangostripe.wsgi
+web: gunicorn djangostripe:app
