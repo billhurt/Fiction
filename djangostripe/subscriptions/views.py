@@ -24,36 +24,42 @@ def home(request):
     product = None
     has_access = False
 
+    if not request.user.is_authenticated:
+        return render(request, "subscriptions/home.html", {
+            "subscription": None,
+            "product": None,
+            "has_access": False,
+        })
+
     try:
-        # Get the StripeCustomer for this user
         stripe_customer = StripeCustomer.objects.get(user=request.user)
+        subscription = stripe.Subscription.retrieve(
+            stripe_customer.stripeSubscriptionId
+        )
 
-        # Retrieve the subscription from Stripe
-        subscription = stripe.Subscription.retrieve(stripe_customer.stripeSubscriptionId)
-
-        # Retrieve the product
         if subscription.plan:
             product = stripe.Product.retrieve(subscription.plan.product)
 
-        # Determine access
         current_timestamp = int(time.time())
-        # Active or canceled-but-still-active
         if subscription.status == "active":
             has_access = True
-        elif subscription.status == "canceled" and subscription.current_period_end > current_timestamp:
+        elif (
+            subscription.status == "canceled"
+            and subscription.current_period_end > current_timestamp
+        ):
             has_access = True
 
     except StripeCustomer.DoesNotExist:
-        # User has no StripeCustomer record
         pass
     except Exception as e:
         print("Stripe error:", e)
 
-    return render(request, 'subscriptions/home.html', {
-        'subscription': subscription,
-        'product': product,
-        'has_access': has_access,
+    return render(request, "subscriptions/home.html", {
+        "subscription": subscription,
+        "product": product,
+        "has_access": has_access,
     })
+
 
 
 @csrf_exempt

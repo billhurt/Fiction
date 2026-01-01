@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/Bill/Library/Mobile Documents/com~apple~CloudDocs/Documents/WebDev/django/django-stripe-subscriptions/env"
+setenv VIRTUAL_ENV "/Users/Bill/Documents/Dev/Django/django-stripe-subscriptions/env"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

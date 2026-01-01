@@ -1,1 +1,1 @@
-web: gunicorn djangostripe.wsgi --log-file -
+web: gunicorn djangostripe.wsgi:application --bind 0.0.0.0:$PORT

@@ -1,1 +1,0 @@
-web: gunicorn djangostripe.wsgi --log-file -

@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/Bill/Library/Mobile Documents/com~apple~CloudDocs/Documents/WebDev/django/django-stripe-subscriptions/env/bin/python3.10" "$0" "$@"
-' '''
+#!/Users/Bill/Documents/Dev/Django/django-stripe-subscriptions/env/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
