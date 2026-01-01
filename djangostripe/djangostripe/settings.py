@@ -10,11 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
-import dj_database_url
 from pathlib import Path
-# import dj_database_url
-# import os
-# import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,11 +90,14 @@ os.environ.setdefault("PGHOST", "localhost")
 os.environ.setdefault("PGPORT", "5432")
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ["PGDATABASE"],
+        'USER': os.environ["PGUSER"],
+        'PASSWORD': os.environ["PGPASSWORD"],
+        'HOST': os.environ["PGHOST"],
+        'PORT': os.environ["PGPORT"],
+    }
 }
 
 
